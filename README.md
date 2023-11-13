@@ -13,4 +13,4 @@ The repository for the code of the FastBERT paper.
 1. To reproduce our training and finetuning results, simply head straight down to the `training` folder and read the README there.
 2. To reproduce our CPU speed benchmarking results, head to `benchmark_cpu`. If you're on Windows, the easiest way to compile&run the code might be to use Visual Studio 2022 Community with the Intel oneAPI extension -- we provide the `.sln` files for this. The other option is to use the Intel compilers (more information on the Intel oneAPI "Getting started" websites). If you're on other platforms, do your magic.
 3. `benchmark_pytorch` results can be reproduced by running `python main.py` in the folder. The results of these runs are automatically put into a SQLite `results.db` file for the ease of inspection.
-4. 
+4. `benchmark_cuda` requires the CUDA Toolkit. Once installed, using `python setup.py install` in the extension folder will do the CUDA code compilation for you and prepare a module that can be readily imported.

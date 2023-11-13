@@ -1,3 +1,3 @@
 from .fff_bmm import *
-from .ff import *
+from .ff_bmm import *
 from .fff_sparse import *

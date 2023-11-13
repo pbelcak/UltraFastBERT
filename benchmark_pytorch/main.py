@@ -49,19 +49,26 @@ def generate_data():
 
 def init_model():
 	global cpu
+	
+	# MOE
 	if args.model == 'moe':
 		model = MoENetwork(args.input_width, args.hidden_width, args.output_width, 2**args.depth, 1)
+	
+	# FF
 	elif args.model == 'ff_native':
 		model = torch.nn.Sequential(
 			torch.nn.Linear(args.input_width, args.hidden_width, bias=False),
 			torch.nn.GELU(),
 			torch.nn.Linear(args.hidden_width, args.output_width, bias=False)
 		)
+	elif args.model == 'ff_bmm':
+		model = FF(args.input_width, args.hidden_width, args.output_width)
 	elif args.model == 'ff_sparse':
 		raise NotImplementedError("Sparse FF is not implemented yet.")
-	elif args.model == 'ff_bmm':
-		ff = FF(args.input_width, args.hidden_width, args.output_width)
-		model = ff
+	
+	# FFF
+	elif args.model == 'fff_native':
+		raise NotImplementedError("Native FFF cannot be implemented yet -- could YOU be the hero of the PyTorch folk?")
 	elif args.model == 'fff_bmm':
 		model = FFF(args.input_width, args.depth, args.output_width)
 	elif args.model == 'fff_sparse':
