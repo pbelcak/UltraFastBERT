@@ -1,0 +1,40 @@
+defaults:
+  - optim: adam
+  - tasks:
+      - mnli
+
+optim:
+  weight_decay: 0.01
+
+name: MNLI
+evaluation_set: validation # always keep this at validation except for the final run
+
+checkpoint: latest
+path: ~/data/ # Path for caches of datasets and tokenizers
+max_seq_length: 128
+
+# Default options:
+# These can be overwritten by specific tasks
+batch_size: 32
+batch_size_ramp: 0
+
+gradient_clipping:
+limited_decay_keys: [bias, LayerNorm.bias, LayerNorm.weight, norm]
+scheduler: linear
+optim_mod:
+  name: none
+
+epochs: 10
+
+# These options are only used for scheduling:
+warmup_steps: 0.1
+cooldown_steps: 0
+steps:
+
+arch_modifications:
+  classification_head:
+    pooler: zero_index
+    include_ff_layer: True
+    # head_dim: ${arch.hidden_size}
+    nonlin: Tanh
+    # classifier_dropout: ${arch.hidden_dropout_prob}

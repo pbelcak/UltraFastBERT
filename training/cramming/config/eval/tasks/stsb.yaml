@@ -1,0 +1,7 @@
+# dataset-specific settings
+stsb:
+  collection: glue
+  regression: True
+  structure: [sentence1, sentence2]
+
+  target_metrics: [pearson]

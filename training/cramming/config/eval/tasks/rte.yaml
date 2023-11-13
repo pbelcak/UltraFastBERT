@@ -1,0 +1,7 @@
+# dataset-specific settings
+rte:
+  collection: super_glue # super_glue has correctly named features
+  regression: False
+  structure: [premise, hypothesis]
+
+  target_metrics: [accuracy]

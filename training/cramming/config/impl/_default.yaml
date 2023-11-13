@@ -1,0 +1,89 @@
+# Settings for implementation details
+# These settings "should" not influence the outcome of the computation in major ways, only its speed.
+#
+
+##################################################################################################################################3
+
+# This is the main folder where data will be stored (such as caches of datasets and tokenizers):
+# This can be an absolute path (which will be honored) or a relative path
+# The relative path will be executed relative to the cfg.base_dir
+# This behavior is controlled in the main_launcher
+path: data
+
+# data implementation:
+local_staging_dir: # Optionally copy a preprocessed dataset into this folder before loading it for training
+forbid_dataset_preprocessing: False
+temporary_corpus: False # Save data directly into local staging dir, forget after use
+max_raw_chunk_size: 8e6
+
+# checkpointing and logging:
+print_loss_every_nth_step: 1000
+save_intermediate_checkpoints: False
+save_every_nth_step: 5000
+resume_run_after_preempt: True
+
+# checkpoint troubleshooting (should only be relevant for >100bil token runs)
+troubleshoot_strategy: recover_checkpoint # can include "recovery_checkpoint" and "dump_nan_grads"
+
+# early termination, cancel runs that do not meet this loss threshold early.
+early_termination:
+  enabled: False
+  budget: 3 # budget in hours
+  loss_threshold: 6.0 # modify this for non-xent losses
+
+# Device micro batch size settings:
+microbatch_size: 128 # dont make it larger than batch_size...
+
+# Basic pytorch settings
+threads: 32 # maximal number of cpu dataloader workers used per GPU, this value will never exceed num_gpus * num_physical threads
+benchmark: True # CUDNN benchmarking
+deterministic: False # This option will disable non-deterministic ops
+non_blocking: True # unblocked .to(device) handles
+tf32_allowed: True
+matmul_precision: high
+
+# Dataloader multiprocessing
+pad_to_multiple_of: 8 # padding in dataloader during downstream
+shuffle_in_dataloader: False # There is still shuffling in the preprocessing pipeline.
+pin_memory: True
+prefetch_factor: 2
+persistent_workers: True # this clashes with pin_memory in pytorch<1.7.1
+
+# Default floating point precision:
+default_precision: float # needs to be a pytorch datatype
+
+# Distributed training
+dist_backend: nccl
+sharing_strategy: # file_descriptor # if no argument is given, then the OS default is picked by pytorch
+
+# Misc:
+enable_huggingface_offline_mode: False
+local_rank: # This is set automatically by the system_startup
+
+push_to_huggingface_hub: False
+hf_directoy_name: "test-crammedBERT-c5" # set a clever name here!
+
+add_env_variables:
+# should be NAME: stringval
+
+# TORCHINDUCTOR_MAX_AUTOTUNE_POINTWISE
+# TORCHINDUCTOR_MAX_AUTOTUNE_GEMM
+
+# Other constants:
+# OMP_NUM_THREADS:[number_of_physical_cores]
+# OMP_SCHEDULE:  # STATIC
+# OMP_PROC_BIND: # CLOSE
+# GOMP_CPU_AFFINITY:  # "N-M"
+# KMP_AFFINITY: # "granularity=fine,compact,1,0"
+# KMP_BLOCKTIME: # 1
+# optional_ld_preloads:
+#  - libiomp5.so
+# - jemalloc.so
+
+#
+# ### jemalloc
+# export MALLOC_CONF="oversize_threshold:1,background_thread:true,metadata_thp:auto,dirty_decay_ms:-1,muzzy_decay_ms:-1"
+# export LD_PRELOAD=/home/mingfeim/packages/jemalloc-5.2.1/lib/libjemalloc.so
+#
+# ### tcmalloc
+# export LD_PRELOAD=/home/mingfeim/packages/gperftools-2.8/install/lib/libtcmalloc.so

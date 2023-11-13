@@ -1,0 +1,28 @@
+# Configuration defaults
+# Settings are separated into hyperparameters for architecture, data, implementation and train/eval hyperparams
+# These are defaults for a small test, not for the crammed model!
+defaults:
+  - arch: hf-bert-tiny
+  - data: sanity-check-2
+  - impl: torch-default
+  - wandb: default
+  - train: bert-base
+  - _self_
+  - override hydra/job_logging: custom
+
+base_dir: outputs
+hydra:
+  sweep:
+    dir: ${base_dir}/${name}/pretrain/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  run:
+    dir: ${base_dir}/${name}/pretrain/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  job:
+    chdir: True
+
+seed: # Optional: Set initial seed
+name: default # A name for this run [will be used for the summary table and outputs folder]
+
+# Total and central computation budget in hours:
+budget: 24
+# debug implementation by running every loop just once:
+dryrun: False

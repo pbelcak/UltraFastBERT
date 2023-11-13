@@ -1,0 +1,7 @@
+# COLA-specific settings
+cola:
+  collection: glue
+  regression: False
+  structure: [sentence]
+
+  target_metrics: [matthews_correlation]
