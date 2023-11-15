@@ -1,5 +1,5 @@
 # FastBERT
-The repository for the code of the FastBERT paper.
+The repository for the code of the FastBERT paper, based directly off the crammedBERT project.
 
 ## Organisation
 
@@ -8,9 +8,32 @@ The repository for the code of the FastBERT paper.
 3. `bechmark_pytorch` folder contains the C++ code for the "Native fused" and "PyTorch BMM" implementations of both FF and FFF inference.
 4. `benchar_cuda` folder contains the C++/CUDA kernel code for the "Naive CUDA" implementations of FF and FFF.
 
-## Reproducing the results
+## Reproducing the results from weights
 
-1. To reproduce our training and finetuning results, simply head straight down to the `training` folder and read the README there.
+The configuration and weights for FastBERT-1x11-long can be found on HuggingFace:
+
+[https://huggingface.co/pbelcak/FastBERT-1x11-long](https://huggingface.co/pbelcak/FastBERT-1x11-long)
+
+These files been produced and uploaded using `training/load_local_model.py` with `impl.push_to_huggingface_hub=True`.
+
+FastBERT-1x11-long, as a model, is an instance of our small extension of the crammedBERT setup.
+You can simply enter the `training` directory and follow the steps given in the crammingBERT README to use HuggingFace `AutoTokenizer` and `AutoModelForMaskedLM`, with the difference that you want FastBERT-1x11-long, and not crammedBERT.
+
+```
+import cramming
+from transformers import AutoModelForMaskedLM, AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("pbelcak/FastBERT-1x11-long")
+model = AutoModelForMaskedLM.from_pretrained("pbelcak/FastBERT-1x11-long")
+
+text = "Replace me by any text you'd like."
+encoded_input = tokenizer(text, return_tensors='pt')
+output = model(**encoded_input)
+```
+
+## Reproducing the results from scratch
+
+1. To reproduce our training and finetuning results, simply head straight down to the `training` folder and follow the instructions of the README there.
 2. To reproduce our CPU speed benchmarking results, head to `benchmark_cpu`. If you're on Windows, the easiest way to compile&run the code might be to use Visual Studio 2022 Community with the Intel oneAPI extension. The other option is to use the Intel compilers directly (more information on the Intel oneAPI "Getting started" websites).
-3. `benchmark_pytorch` results can be reproduced by running `python main.py` in the folder. The results of these runs are automatically put into a SQLite `results.db` file for the ease of inspection.
-4. `benchmark_cuda` requires the CUDA Toolkit. Once installed, using `python setup.py install` in the extension folder will do the CUDA code compilation for you and prepare a module that can be readily imported.
+3. `benchmark_pytorch` results can be reproduced by running `python main.py` in the folder. The outcomes of these runs are automatically put into a SQLite `results.db` file for the ease of inspection.
+4. `benchmark_cuda` requires the CUDA Toolkit. Once installed, using `python setup.py install` in the extension folder will do the CUDA code compilation for you and prepare a module that can be imported.

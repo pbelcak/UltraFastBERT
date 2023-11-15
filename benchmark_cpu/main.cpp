@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 
     batch_size = 16384, hidden_dim = 768, depth = 12, layer_size = 4095;
     n_nodes = (1 << depth) - 1;
-    int N = 10;
+    int N = 250;
 
     cout << "Initializing weights" << std::endl;
     W1 = (float*)mkl_malloc(hidden_dim * n_nodes * sizeof(float), 64);
