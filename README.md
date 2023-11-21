@@ -1,5 +1,7 @@
 # FastBERT
-The repository for the code of the FastBERT paper, based directly off the crammedBERT project.
+The repository for the paper "Exponentially Faster Language Modelling"
+
+https://arxiv.org/abs/2311.10770
 
 ## Organisation
 
