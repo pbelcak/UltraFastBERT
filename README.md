@@ -21,7 +21,15 @@ These files been produced and uploaded using `training/load_local_model.py` with
 FastBERT-1x11-long, as a model, is an instance of our small extension of the crammedBERT setup.
 You can simply enter the `training` directory and follow the steps given in the crammingBERT README to use HuggingFace `AutoTokenizer` and `AutoModelForMaskedLM`, with the difference that you want FastBERT-1x11-long, and not crammedBERT.
 
-```
+### Quickstart
+
+1. Create a new Python/conda environment, or simply use one that does not have any previous version of the original `cramming` project installed. If, by accident, you use the original cramming repository code instead of the one provided in the `/training` folder of this project, you will be warned by `transformers` that there are some extra weights (FFF weight) and that some weights are missing (the FF weights expected by the original `crammedBERT`).
+2. `cd ./training`
+3. `pip install .`
+4. Create `minimal_example.py`
+5. Paste the code below
+
+```python
 import cramming
 from transformers import AutoModelForMaskedLM, AutoTokenizer
 
@@ -32,6 +40,9 @@ text = "Replace me by any text you'd like."
 encoded_input = tokenizer(text, return_tensors='pt')
 output = model(**encoded_input)
 ```
+
+6. Run `python minimal_example.py`.
+
 
 ## Reproducing the results from scratch
 
