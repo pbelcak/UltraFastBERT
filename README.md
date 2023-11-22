@@ -1,4 +1,4 @@
-# FastBERT
+# UltraFastBERT
 The repository for the paper "Exponentially Faster Language Modelling"
 
 https://arxiv.org/abs/2311.10770
@@ -12,14 +12,14 @@ https://arxiv.org/abs/2311.10770
 
 ## Reproducing the results from weights
 
-The configuration and weights for FastBERT-1x11-long can be found on HuggingFace:
+The configuration and weights for UltraFastBERT-1x11-long can be found on HuggingFace:
 
-[https://huggingface.co/pbelcak/FastBERT-1x11-long](https://huggingface.co/pbelcak/FastBERT-1x11-long)
+[https://huggingface.co/pbelcak/UltraFastBERT-1x11-long](https://huggingface.co/pbelcak/UltraFastBERT-1x11-long)
 
 These files been produced and uploaded using `training/load_local_model.py` with `impl.push_to_huggingface_hub=True`.
 
-FastBERT-1x11-long, as a model, is an instance of our small extension of the crammedBERT setup.
-You can simply enter the `training` directory and follow the steps given in the crammingBERT README to use HuggingFace `AutoTokenizer` and `AutoModelForMaskedLM`, with the difference that you want FastBERT-1x11-long, and not crammedBERT.
+UltraFastBERT-1x11-long, as a model, is an instance of our small extension of the crammedBERT setup.
+You can simply enter the `training` directory and follow the steps given in the crammingBERT README to use HuggingFace `AutoTokenizer` and `AutoModelForMaskedLM`, with the difference that you want UltraFastBERT-1x11-long, and not crammedBERT.
 
 ### Quickstart
 
@@ -33,8 +33,8 @@ You can simply enter the `training` directory and follow the steps given in the 
 import cramming
 from transformers import AutoModelForMaskedLM, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("pbelcak/FastBERT-1x11-long")
-model = AutoModelForMaskedLM.from_pretrained("pbelcak/FastBERT-1x11-long")
+tokenizer = AutoTokenizer.from_pretrained("pbelcak/UltraFastBERT-1x11-long")
+model = AutoModelForMaskedLM.from_pretrained("pbelcak/UltraFastBERT-1x11-long")
 
 text = "Replace me by any text you'd like."
 encoded_input = tokenizer(text, return_tensors='pt')
