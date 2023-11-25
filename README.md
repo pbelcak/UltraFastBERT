@@ -6,7 +6,7 @@ https://arxiv.org/abs/2311.10770
 ## Organisation
 
 1. The `training` folder contains a clone of the crammedBERT repository from the beginning of October 2023. A few new configurations and small modifications have been made to enable the use of FFFs. A masking implementation (i.e. an implementation of FFFs that offers no speed advantage over FFs but simulates its selective engagement of neurons by masking) is provided for training and downstream finetuning.
-2. The `benchmark_cpu` folder contains C++ code using Intel MKL 2023.2.0 to impelement accelerated CPU versions of FFF inference as well as baseline DMM implementations of the traditional FF layers.
+2. The `benchmark_cpu` folder contains C++ code using Intel MKL 2023.2.0 to implement accelerated CPU versions of FFF inference as well as baseline DMM implementations of the traditional FF layers.
 3. `bechmark_pytorch` folder contains the C++ code for the "Native fused" and "PyTorch BMM" implementations of both FF and FFF inference.
 4. `benchar_cuda` folder contains the C++/CUDA kernel code for the "Naive CUDA" implementations of FF and FFF.
 
