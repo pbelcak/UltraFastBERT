@@ -261,7 +261,7 @@ class ScriptableLMForSequenceClassification(PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
         self.cfg = OmegaConf.create(config.arch)
-        self.num_labels = self.cfg.num_labels
+        self.num_labels = getattr(config, "num_labels", self.cfg.num_labels)
 
         self.encoder = ScriptableLM(config)
         self.pooler = PoolingComponent(self.cfg.classification_head, self.cfg.hidden_size)
@@ -320,7 +320,7 @@ class ScriptableLMForSCRIPTTraining(PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
         self.cfg = OmegaConf.create(config.arch)
-        self.num_labels = self.cfg.num_labels
+        self.num_labels = getattr(config, "num_labels", self.cfg.num_labels)
 
         self.encoder = ScriptableLM(config)
         self.prediction_head = PredictionHeadComponent(self.cfg)
